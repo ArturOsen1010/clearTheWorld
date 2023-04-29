@@ -45,6 +45,10 @@ class Реклама {
     this.div.style.left = `${this.x}px`;
     this.div.style.top = `${this.y}px`;
     this.parent.appendChild(this.div);
+
+    this.div.addEventListener("click", function() {
+      window.location.href = "https://paypal.me/arturOsen";
+    });
   }
 
   изменитьРазмер(x, y, ширина, высота) {
@@ -52,6 +56,11 @@ class Реклама {
     this.div.style.top = `${y}px`;
     this.div.style.width = `${ширина}px`;
     this.div.style.height = `${высота}px`;
+    this.div.style.backgroundImage = "url('advert.jpg')";
+    this.div.style.backgroundPosition = "center center";
+    this.div.style.backgroundRepeat = "no-repeat";
+    this.div.style.backgroundSize = "cover";
+
   }
 }
 
@@ -147,24 +156,3 @@ let экран
 window.onload = () => {
   экран = new Экран(window.innerWidth, window.innerHeight)
 }
-
-// Загрузка библиотеки PayPal JavaScript SDK
-paypal.Buttons({
-  // Установка параметров платежа
-  createOrder: function(data, actions) {
-    return actions.order.create({
-      purchase_units: [{
-        amount: {
-          value: '10.00' // Сумма платежа
-        }
-      }]
-    });
-  },
-  // Обработка успешного проведения платежа
-  onApprove: function(data, actions) {
-    return actions.order.capture().then(function(details) {
-      // Оповещение пользователя о успешном платеже
-      alert('Transaction completed by ' + details.payer.name.given_name);
-    });
-  }
-}).render('#paypal-button-container');
